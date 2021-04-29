@@ -1,15 +1,18 @@
 "use strict";
 
+const fs = require('fs');
 const path = require('path');
 const util = require('util');
 const http = require('http');
 
 const express = require('express');
 const sqlite3 = require('sqlite3');
+const chalk = require('chalk');
 const app = express();
 
-const DB_PATH = path.join(__dirname, 'sql.db');
 const WEB_PATH = path.join(__dirname, 'web');
+const DB_PATH = path.join(__dirname, 'db/sql.db');
+const DB_SQL_PATH = path.join(__dirname, 'db/mydb.sql');
 const HTTP_PORT = 4000;
 
 const delay = util.promisify(setTimeout);
@@ -35,11 +38,14 @@ const SQL3 = {
 
 const httpServer = http.createServer(app);
 
-main();
+main().catch(() => console.error(chalk.red(error)));
 
-function main() {
+async function main() {
+    let initSQL = fs.readFileSync(DB_SQL_PATH, 'utf-8');
+    await SQL3.exec(initSQL);
+
     defineRoutes(app);
-    httpServer.listen(HTTP_PORT, () => console.log(`Listening on port ${HTTP_PORT}`));
+    httpServer.listen(HTTP_PORT, () => console.log(chalk.cyan(`Listening on port ${HTTP_PORT}`)));
 }
 
 function defineRoutes(app) {
