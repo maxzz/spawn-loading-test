@@ -1,14 +1,19 @@
-let btn;
+let btnGet;
+let btnClear;
 let display;
 
 function init() {
     display = document.getElementById('records-result');
-    btn = document.getElementById('btn-get-records');
+    btnGet = document.getElementById('btn-get-records');
+    btnClear = document.getElementById('btn-clear-records');
+    display.innerText = '';
 
-    btn.addEventListener('click', getRecords, false);
+    btnGet.addEventListener('click', getRecords, false);
+    btnClear.addEventListener('click', clearRecords, false);
 }
 
 async function getRecords() {
+    display.innerText = '';
     try {
         let res = await fetch('/get-records');    
         if (res.status === 200) {
@@ -16,16 +21,27 @@ async function getRecords() {
             showRecords(records);
         }
     } catch (error) {
-        showRecords();
+        display.innerText = `Failed to get records. ${error}`;
     }
 }
 
 function showRecords(records) {
     if (records) {
-        display.innerText = JSON.stringify(records, null, 4);
+        let newRecords = records.map((record) => {
+            let res = '';
+            for (let [key, val] of Object.entries(record)) {
+                res += `${key}: '${val}'`;
+            }
+            return `{${res}}`;
+        });
+        display.innerText = JSON.stringify(newRecords, null, 4);
     } else {
         display.innerText = 'No records';
     }
+}
+
+function clearRecords() {
+    display.innerText = '';
 }
 
 init();

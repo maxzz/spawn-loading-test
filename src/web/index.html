@@ -15,18 +15,57 @@
         }
     </style>
 </head>
-<body>
-    <div style="margin: 0 1rem;">
+<body style="background-color: #f1f1f1;">
+    <div style="margin: 0 1rem; display: flex; flex-direction: column; height: 100%;">
         <div style="
-            margin: 0 -1rem; padding: 1rem;
+            margin: 0 -1rem; padding: 1.5rem 1rem;
             background-color: hsl(184, 70%, 80%);
             color: hsl(202, 91%, 33%);
             font-size: 2rem;
             display: flex; align-items: center;"
         >Test page</div>
-        <button style="padding: .5rem;" id="btn-get-records">Get Records</button>
-        <div>
-            <pre id="records-result"></pre>
+        <div style="margin-top: -1.2rem;">
+            <button style="padding: .5rem;" id="btn-get-records">Get Records</button>
+            <button style="padding: .5rem;" id="btn-clear-records">Clear Records</button>
+        </div>
+        <div style="flex: 0; overflow: hidden; font-size: .8rem;">
+            <pre style="overflow-y: auto;" 
+                id="records-result">
+            [
+                {
+                    "something": 22785039,
+                    "other": "dummy 3"
+                },
+                {
+                    "something": 267241386,
+                    "other": "dummy 0"
+                },
+                {
+                    "something": 522935608,
+                    "other": "dummy 0"
+                },
+                {
+                    "something": 709748234,
+                    "other": "dummy 2"
+                },
+                {
+                    "something": 22785039,
+                    "other": "dummy 3"
+                },
+                {
+                    "something": 267241386,
+                    "other": "dummy 0"
+                },
+                {
+                    "something": 522935608,
+                    "other": "dummy 0"
+                },
+                {
+                    "something": 709748234,
+                    "other": "dummy 2"
+                }
+            ]
+            </pre>
         </div>
     </div>
     <script src="/js/records.js"></script>
