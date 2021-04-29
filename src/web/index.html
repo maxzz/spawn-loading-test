@@ -16,7 +16,7 @@
     </style>
 </head>
 <body style="background-color: #f1f1f1;">
-    <div style="margin: 0 1rem; display: flex; flex-direction: column; height: 100%;">
+    <div style="margin: 0 1rem; display: flex; flex-direction: column; height: 100vh; background-color: rgb(255, 0, 0);">
         <div style="
             margin: 0 -1rem; padding: 1.5rem 1rem;
             background-color: hsl(184, 70%, 80%);
@@ -28,8 +28,8 @@
             <button style="padding: .5rem;" id="btn-get-records">Get Records</button>
             <button style="padding: .5rem;" id="btn-clear-records">Clear Records</button>
         </div>
-        <div style="flex: 0; overflow: hidden; font-size: .8rem;">
-            <pre style="overflow-y: auto;" 
+        <div style="flex: 1 1 auto; overflow: auto; font-size: .8rem;">
+            <pre style="overflow-y: auto;"
                 id="records-result">
             [
                 {
