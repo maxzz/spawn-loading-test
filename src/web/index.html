@@ -6,8 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🔥</text></svg>" type="image/x-icon">
     <title>Test page</title>
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
 </head>
 <body>
-    Test page
+    <div style="margin: 0 1rem;">
+        <div style="
+            margin: 0 -1rem; padding: 1rem;
+            background-color: hsl(184, 70%, 80%);
+            color: hsl(202, 91%, 33%);
+            font-size: 2rem;
+            display: flex; align-items: center;"
+        >Test page</div>
+        <button style="padding: .5rem;" id="btn-get-records">Get Records</button>
+        <div>
+            <pre id="records-result"></pre>
+        </div>
+    </div>
+    <script src="/js/records.js"></script>
 </body>
 </html>
