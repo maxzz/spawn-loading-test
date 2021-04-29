@@ -6,9 +6,11 @@ const util = require('util');
 const http = require('http');
 
 const express = require('express');
+const morgan = require('morgan');
 const sqlite3 = require('sqlite3');
 const chalk = require('chalk');
 const app = express();
+app.use(morgan('combined'));
 
 const WEB_PATH = path.join(__dirname, 'web');
 const DB_PATH = path.join(__dirname, 'db/sql.db');
