@@ -6,7 +6,6 @@ const http = require('http');
 
 const express = require('express');
 const sqlite3 = require('sqlite3');
-const { mainModule } = require('process');
 const app = express();
 
 const DB_PATH = path.join(__dirname, 'sql.db');
@@ -54,14 +53,14 @@ function defineRoutes(app) {
     });
 
     app.use(function rewriter(req, res, next) {
-        if (/(?:\/index\/?)?(?:[#?].*$)?$/.test(req.url)) {
+        if (/^\/(?:index\/?)?(?:[?#].*$)?$/.test(req.url)) {
             req.url = 'index.html';
         }
         else if (/^\/js\/.+$/.test(req.url)) {
             // DO nothing
         }
-        else if (/^\/(?:[\w\d]+)(?:[\/#?].*$)?$/.test(req.url)) {
-            let [, basename] = req.url.match(/^([\w\d]+)(?:[\/#?].*$)$/);
+        else if (/^\/(?:[\w\d]+)(?:[\/?#].*$)?$/.test(req.url)) {
+            let [, basename] = req.url.match(/^\/([\w\d]+)(?:[\/?#].*$)?$/);
             req.url = `${basename}.html`;
         }
         else {
@@ -71,12 +70,12 @@ function defineRoutes(app) {
         next();
     });
 
-    app.use(express.static(WEB_PATH), {
+    app.use(express.static(WEB_PATH, {
         maxAge: 100,
         setHeaders: function setHeaders(res) {
             res.setHeader("Server", "Spawn test");
         }
-    });
+    }));
 } //defineRoutes()
 
 async function getAllRecords() {
