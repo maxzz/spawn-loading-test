@@ -38,11 +38,13 @@ const SQL3 = {
 
 const httpServer = http.createServer(app);
 
-main().catch(() => console.error(chalk.red(error)));
+main().catch((error) => console.error(chalk.red(error)));
 
 async function main() {
     let initSQL = fs.readFileSync(DB_SQL_PATH, 'utf-8');
     await SQL3.exec(initSQL);
+
+    await insertDummyRecord();
 
     defineRoutes(app);
     httpServer.listen(HTTP_PORT, () => console.log(chalk.cyan(`Listening on port ${HTTP_PORT}`)));
@@ -84,12 +86,28 @@ function defineRoutes(app) {
     }));
 } //defineRoutes()
 
+async function insertDummyRecord() {
+    let other = `dummy ${Date.now() % 5}`;
+    let something = Math.trunc(Math.random() * 1E9);
+
+    let otherID = await getOrInsertOtherID(other);
+    if (otherID !== null) {
+        let inserted = await insertSomething(something, otherID);
+        if (inserted) {
+            let records = await getAllRecords();
+            console.table(records);
+            return true;
+        }
+    }
+    console.error('Ooops');
+}
+
 async function getAllRecords() {
     const result = await SQL3.all(
         `
         SELECT
-            Something.data AS 'something',
-            Order.data AS 'other'
+            Something.data AS "something",
+            Other.data AS "other"
         FROM
             Something
             JOIN Other ON (Something.otherID = Other.id)
@@ -98,4 +116,34 @@ async function getAllRecords() {
         `
     );
     return result;
+}
+
+async function getOrInsertOtherID(other) {
+    let result = await SQL3.get(`
+        SELECT
+            id
+        FROM
+            Other
+        WHERE
+            data = ?`, other);
+    if (result) {
+        return result.id;
+    } else {
+        result = await SQL3.run(`
+            INSERT INTO
+                Other
+            (data)
+            VALUES
+                (?)`, other);
+        if (result && result.changes > 0) {
+            return result.lastID;
+        }
+    }
+}
+
+async function insertSomething(something, otherID) {
+    let result = await SQL3.run(`INSERT INTO Something (otherID, data) VALUES (?, ?)`, otherID, something);
+    if (result && result.changes > 0) {
+        return true;
+    }
 }
