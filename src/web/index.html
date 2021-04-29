@@ -13,10 +13,28 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        .mono {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        /* Firefox scrollbars */
+        .smallscroll {
+            --sb-width: 8px;
+            scrollbar-color: #666b7a transparent;
+            scrollbar-width: thin;
+        }
+        /* Chrome scrollbars */
+        .smallscroll::-webkit-scrollbar {
+            width: var(--sb-width);
+            height: var(--sb-width);
+            background-color: transparent;
+        }
+        .smallscroll::-webkit-scrollbar-thumb {
+            background-color: #666b7a;
+        }
     </style>
 </head>
 <body style="background-color: #f1f1f1;">
-    <div style="margin: 0 1rem; display: flex; flex-direction: column; height: 100vh; background-color: rgb(255, 0, 0);">
+    <div style="margin: 0 1rem; display: flex; flex-direction: column; height: 100vh;">
         <div style="
             margin: 0 -1rem; padding: 1.5rem 1rem;
             background-color: hsl(184, 70%, 80%);
@@ -28,8 +46,11 @@
             <button style="padding: .5rem;" id="btn-get-records">Get Records</button>
             <button style="padding: .5rem;" id="btn-clear-records">Clear Records</button>
         </div>
-        <div style="flex: 1 1 auto; overflow: auto; font-size: .8rem;">
-            <pre style="overflow-y: auto;"
+        <div 
+            style="flex: 1 1 auto; overflow: auto; font-size: .7rem; width: 28rem; margin: 0 auto 1rem; background-color: rgb(0, 24, 0); color:rgb(143, 230, 57);"
+            class="smallscroll"
+        >
+            <pre style="overflow-y: auto;" class="mono"
                 id="records-result">
             [
                 {

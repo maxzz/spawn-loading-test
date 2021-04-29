@@ -30,11 +30,12 @@ function showRecords(records) {
         let newRecords = records.map((record) => {
             let res = '';
             for (let [key, val] of Object.entries(record)) {
-                res += `${key}: '${val}'`;
+                res += `${res ? ', ': ''}${key}: '${val}'`;
             }
             return `{${res}}`;
         });
-        display.innerText = JSON.stringify(newRecords, null, 4);
+        display.innerText = JSON.stringify(newRecords, null, 4).replace(/"/g, '');
+        //display.innerText = JSON.stringify(records, null, 4);
     } else {
         display.innerText = 'No records';
     }
