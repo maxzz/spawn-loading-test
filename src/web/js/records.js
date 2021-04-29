@@ -15,7 +15,7 @@ function init() {
 async function getRecords() {
     display.innerText = '';
     try {
-        let res = await fetch('/get-records');    
+        let res = await fetch('http://localhost:4000/get-records');
         if (res.status === 200) {
             let records = await res.json();
             showRecords(records);
